@@ -36,15 +36,16 @@ def start_message(message):
     
     logger.info(f"Запрос: {userText}")
 
-    prompt['messages'] = [
-        {
-            'role': "user",
-            'text': userText
-        }
-    ]
-    
-    response = requests.post(MODEL_URL, headers=HEADER, json=prompt).json()
-    bot.send_message(message.chat.id, getText(response))
+    if userText:
+        prompt['messages'] = [
+            {
+                'role': "user",
+                'text': userText
+            }
+        ]
+        
+        response = requests.post(MODEL_URL, headers=HEADER, json=prompt).json()
+        bot.send_message(message.chat.id, getText(response))
 
 
 bot.polling()
